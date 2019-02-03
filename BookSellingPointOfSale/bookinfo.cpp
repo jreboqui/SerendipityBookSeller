@@ -1,6 +1,7 @@
 #include "bookinfo.h"
 #include "pch.h"
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -10,16 +11,13 @@ void bookInfo(std::string isbn, std::string title, std::string author, std::stri
 	cout << "Serendipity Booksellers\n";
 	cout << "Book Information";
 
-	cout << "ISBN: ";
-	cout << "Title: ";
-	cout << "Author: ";
-	cout << "Publisher: ";
-	cout << "Date Added: ";
-	cout << "Quantity-On-Hand: ";
-	cout << "Wholesale Cost: ";
-	cout << "Retail Price: ";
-
-	cout << "Enter Your Choice: ";
-
+	cout << "ISBN: " << isbn << std::endl;
+	cout << "Title: " << title << std::endl;;
+	cout << "Author: " << author << std::endl;;
+	cout << "Publisher: " << author << std::endl;;
+	cout << "Date Added: " << date<< std::endl;;
+	cout << "Quantity-On-Hand: " << qty << std::endl;;
+	cout << "Wholesale Cost: " << wholesale << std::endl;;
+	cout << "Retail Price: " << retail << std::endl;;
 
 }

@@ -1,15 +1,33 @@
+#include "pch.h"
 #include "common.h"
 #include "invmenu.h"
-#include "pch.h"
+#include "bookinfo.h"
 
 #include <iostream>
 #include <sstream>
 
+const int SIZE = 20;
+
+extern std::string bookTitle[SIZE];
+extern std::string isbn[SIZE];
+extern std::string author[SIZE];
+extern std::string publisher[SIZE];
+extern std::string dateAdded[SIZE];
+extern int qtyOnHand[SIZE];
+extern double wholesale[SIZE];
+extern double retail[SIZE];
+
+
 bool IntTryParse(std::string input, int& output);
+bool DoubleTryParse(std::string input, double& output);
 void lookUpBook(); //option 1
 void addBook(); //option 2
 void editBook(); //option 3
 void deleteBook(); //option 4
+void promptUserForBookDetails(int index);
+void bookInfo(std::string isbn, std::string title, std::string author, std::string publisher, std::string date,
+	int qty, double wholesale, double retail);
+
 
 void invMenu()
 {
@@ -61,12 +79,52 @@ void invMenu()
 
 //option 1
 void lookUpBook() {
-	std::cout << "\nYou selected 1 \n";
+	//search for the bookTitle, this version has it
+	//exactly as entered
+	std::string titleToSearch;
+	bool found = false;
+
+	std::cout << "\nPlease enter a book title to search: ";
+	std::getline(std::cin, titleToSearch);
+
+	for (int index = 0; index < SIZE; index++) {
+		if (bookTitle[index] == titleToSearch) {
+			std::cout << "Found book title at: " << index << std::endl;
+			found = true;
+			bookInfo(isbn[index], bookTitle[index], author[index], publisher[index], dateAdded[index], qtyOnHand[index],
+				wholesale[index], retail[index]);
+		}
+	}
+	//prompt the user for a book title
+
+	if (!found) {
+		std::cout << "Can't find book title!\n";
+	}
 } 
 
 //option 2
 void addBook() {
-	std::cout << "\nYou selected 2 \n";
+	
+	bool flag = false;
+	//find an index with an empty stringTitle
+	for (int index = 0; index < SIZE; index++) {
+		if (bookTitle[index] == "")
+		{
+			std::cout << "Found space at: " << index << std::endl;
+			std::cout << "\nPlease enter book information: \n" << std::endl;
+
+			promptUserForBookDetails(index);
+
+			flag = true;
+			break;
+		}
+	}
+
+	if (!flag) {
+		std::cout << "No more books may be added.\n\n";
+	}
+
+
 }
 
 //option 3
@@ -78,5 +136,42 @@ void editBook() {
 //option 4
 void deleteBook(){
 	std::cout << "\nYou selected 4 \n";
+}
+
+
+void promptUserForBookDetails(int index) {
+	
+	std::string input;
+	int input_integer;
+
+	std::cout << "Title: ";
+	std::getline(std::cin, bookTitle[index]);
+
+	std::cout << "ISBN: ";
+	std::getline(std::cin, isbn[index]);
+
+	std::cout << "Author: ";
+	std::getline(std::cin, author[index]);
+
+	std::cout << "Publisher: ";
+	std::getline(std::cin, publisher[index]);
+
+	std::cout << "Date added (MM-DD-YYYY): ";
+	std::getline(std::cin, dateAdded[index]);
+	
+	std::cout << "Quantity: ";
+	qtyOnHand[index] = promptUntilValidInt();
+	
+	std::cin.ignore();
+
+	std::cout << "Wholesale Price: ";
+	wholesale[index] = promptUntilValidDouble();
+	std::cin.ignore();
+
+	std::cout << "Retail Price: ";
+	retail[index] = promptUntilValidDouble();
+	std::cin.ignore();
+
+	std::cout << "\nRecord was entered\n\n";
 }
 

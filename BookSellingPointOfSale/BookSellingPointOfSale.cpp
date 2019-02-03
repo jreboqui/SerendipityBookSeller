@@ -13,6 +13,7 @@
 void cashier();
 void invMenu();
 void reports();
+bool IntTryParseChoice(std::string input, int& output);
 
 void displayMenu() {
 	std::cout << "Serendipity Booksellers\n";
@@ -52,7 +53,7 @@ int main()
 		std::cout << "Enter Your Choice: ";
 		std::getline(std::cin, choice);
 
-		if (!IntTryParse(choice, choice_integer)) {
+		if (!IntTryParseChoice(choice, choice_integer)) {
 			std::cout << "Please enter a valid choice next time!\n";
 		}
 		else 
